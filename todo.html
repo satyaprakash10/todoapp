@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Document</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      .sample {
+        background-color: yellow;
+        height: 100%;
+        width: 100%;
+        }
+
+      .container {
+        margin-top: 60px;
+        background-color: yellow;
+      }
+      
+      .p {
+        color: #5f5928;
+        text-align: center;
+      }
+      
+      .taskDone {
+        text-decoration: line-through;
+      }
+
+      .panel {
+        margin-top: 20px;
+      }
+
+      .table {
+        background: #fff;
+        height: 50%;
+        overflow-y: scroll;
+      }
+      
+      .fa {
+        color: red;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sample">
+      
+        <div class="container col-sm-8 col-offset-2">
+            <div id="app">
+              <h1 class="text-center">TODOS APP</h1>
+            
+                <!---add new task form --->
+                  <div class="panel panel-default">
+                    <p class=" p"> This Demo showcases a simple workflow with Vuejs and Html.</p>
+                    <form  v-on:submit='addTask'>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" placeholder="New Todo..."  v-model='newTask.name'>
+                      </div>
+                      <div class="col-sm-4 mt-3">
+                        <input type="submit" value="Add" id="" class="btn btn-primary btn-block">
+                      </div>
+                    </form>
+                  </div>
+              
+              <table class="table mt-4 style">
+                  <thead>
+                      <th>Task Name</th>
+                      <th>Delete</th>
+                  </thead>
+                  <tbody>
+                    <tr v-for='task in tasks'>
+                      <td><span :class="{'taskDone': task.done }">{{ task.name }}</span></td>
+                      <td><i class="fa fa-close btn " v-on:click="deleteTask(task)"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+     var taskApp = new Vue({
+       el: '#app',
+       data: {
+         tasks: [
+           { name: 'task which is need to do today', done: false },
+           { name: 'task which is need to do finish', done: false },
+           { name: 'task which is need to do some changes', done: false },
+         ],
+         newTask: { name: '', done: false },
+       },
+    methods: {
+      addTask: function(e) {
+        e.preventDefault();
+        const newt = {...this.newTask} // {name: 'asds' , done: false}
+
+        if(this.newTask.name.length !== 0) {
+            this.tasks.push(newt)
+            this.newTask.name= ''
+        } else {
+          alert('please enter name')
+        }
+      },
+      deleteTask: function(task) {
+        this.tasks.splice(this.tasks.indexOf(task), 1)
+      }
+    },
+
+     });
+    </script>
+  </body>
+</html>
+ 
